@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Dokkio Palindrome Finder</title>
+	<!-- <link rel="stylesheet" href="css/style.css"> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js"></script>
+	<style>
+		html {
+			background: #444;
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			background: white;
+			box-shadow: 0 0 5px 0 rgba(0,0,0,0.4);
+			font-family: sans-serif;
+			height: calc(100% - 4em);
+			margin: 1em;
+			padding: 1em;
+			width: calc(100% - 4em);
+		}
+		span.palindrome {
+			background: #af4448;
+			color: white;
+		}
+		#inputContainer > .pane, #outputContainer > .pane {
+			height: 20em;
+			width: 40em;
+		}
+		#inputContainer, #outputContainer {
+			display: inline-block;
+			font-size: inherit;
+			vertical-align: top;
+		}
+		#inputContainer {
+			margin-right: 1em;
+		}
+		#input {
+			background: #ddd;
+			color: #444;
+		}
+		#output {
+
+		}
+	</style>
+</head>
+
+<body id="home">
+
+	<h1>Palindromes</h1>
+
+	<div id="inputContainer">
+		<h2>Input</h2>
+		<textarea class="pane" id="input"></textarea>
+	</div>
+
+	<div id="outputContainer">
+		<h2>Output</h2>
+		<div class="pane" id="output"></div>
+	</div>
+
+	<div>
+		<button id="generateButton" onclick="generateText()">generate random words</button>
+	</div>
+
+
+	<script type="module">
+		import { debounce } from './js/util.js';
+		import { markupPalindromes } from './js/palindrome.js';
+
+		document.getElementById('input').addEventListener('keydown', debounce(analyzeInput));
+
+		document.getElementById('generateButton').addEventListener('click', generateText);
+
+		function analyzeInput() {
+			const input = document.getElementById('input').value;
+			const output = markupPalindromes(input);
+			document.getElementById('output').innerHTML = output;
+		}
+
+		function generateText() {
+			const text = faker.random.words(100);
+			document.getElementById('input').value = text;
+			analyzeInput();
+		}
+
+	</script>
+</body>
+</html>
