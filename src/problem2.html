@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="utf-8">
+   <title>Dokkio Census Analyzer</title>
+</head>  
+
+<body>
+   2015 US Population
+   <table>
+      <tr>
+         <th>Total</th>
+         <td>
+            <div id="total"></div>
+         </td>
+      </tr>
+      <tr>
+         <th>Max</th>
+         <td>
+            <div id="max"></div>
+         </td>
+      </tr>
+   </table>
+
+   <script type="module">
+      import { getPopulation, getStateList } from './js/census.js';
+      import { analyzePopulationData } from './js/population.js';
+
+      start();
+
+      async function start() {
+         const states = getStateList();
+         const rawData = await getPopulation(states);
+         const { totalPopulation, maxPopulation } = analyzePopulationData(rawData);
+
+         document.getElementById('total').innerHTML = totalPopulation.toLocaleString();
+         document.getElementById('max').innerHTML = maxPopulation;
+      }
+
+   </script>
+
+</body>
+</html>
